@@ -6,7 +6,18 @@ def style_background_home():
         """
             <style>
                 .stApp {
-                    background-color: #a2d2ff !important;
+                    background: #a2d2ff !important;
+                }
+                .stApp div[data-testid="stColumn"]{
+                color: #333 !important;
+                display: flex !important;
+                flex-direction: row !important;
+                align-items: center !important;
+                justify-content: center !important;
+                background-color: #fefefe !important;
+                padding: 2rem !important;
+                border-radius: 1rem !important;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1) !important;
                 }
             </style>
         """, unsafe_allow_html=True
@@ -28,7 +39,7 @@ def style_base_layout():
         """
             <style>
             @import url('https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap');
-            @import url('https://fonts.googleapis.com/css2?family=Kaushan+Script&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+            @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
                 #MainMenu, footer, header{
                     visibility: hidden;
                 }
@@ -41,11 +52,11 @@ def style_base_layout():
                 h1, h2{
                     font-family: 'Kaushan Script', cursive !important;
                     font-size: 3.5rem !important;
-                    line-height: 1.2 !important;
-                    margin-bottom: 1rem !important;
+                    line-height: 1 !important;
+                    margin-bottom: 0.6rem !important;
                 }
                 h3, h4, h5, h6, p{
-                    font-family: 'Playfair Display', serif !important;
+                    font-family: 'Outfit', sans-serif !important;
                 }
                 button {
                     background: #007ea7 !important;
