@@ -11,3 +11,15 @@ def header_home():
         </div>
         """, unsafe_allow_html=True
     )
+
+def header_dashboard():
+
+    logo_url = "https://img.magnific.com/premium-vector/magnifying-glass-logo-people-finder-infinity-searching-vector_718429-1342.jpg?semt=ais_hybrid&w=740&q=80"
+    st.markdown(
+        f"""
+        <div style="display: flex; align-items: center;justify-content: center; gap: 1rem;">
+            <img src="{logo_url}"  style="border-radius: 50%; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); height: 80px;">
+            <h2 style=" color: #021733; text-align: left;">Snap<br/>Voice</h2>
+        </div>
+        """, unsafe_allow_html=True
+    )

@@ -28,7 +28,7 @@ def style_background_dashboard():
         """
             <style>
                 .stApp {
-                    background-color: #d2b7e5 !important;
+                    background-color: #89c2d9 !important;
                 }
             </style>
         """, unsafe_allow_html=True
@@ -40,6 +40,7 @@ def style_base_layout():
             <style>
             @import url('https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap');
             @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
+            @import url('https://fonts.googleapis.com/css2?family=Carter+One&display=swap');
                 #MainMenu, footer, header{
                     visibility: hidden;
                 }
@@ -49,9 +50,16 @@ def style_base_layout():
                     padding-left: 2rem;
                     padding-right: 2rem;
                 }
-                h1, h2{
+                
+                h1{
                     font-family: 'Kaushan Script', cursive !important;
                     font-size: 3.5rem !important;
+                    line-height: 1 !important;
+                    margin-bottom: 0.6rem !important;
+                }
+                h2{
+                    font-family: 'Carter One', system-ui !important;
+                    font-size: 2.5rem !important;
                     line-height: 1 !important;
                     margin-bottom: 0.6rem !important;
                 }
