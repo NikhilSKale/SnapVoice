@@ -67,7 +67,7 @@ def style_base_layout():
                     font-family: 'Outfit', sans-serif !important;
                 }
                 button {
-                    background: #007ea7 !important;
+                    background-color: #7251b5 !important;
                     color: white !important;
                     border: none !important;
                     padding: 0.5rem 1.5rem !important;
@@ -75,7 +75,7 @@ def style_base_layout():
                     transition: transform 0.2s ease-in-out !important;
                     }
                 button[kind='secondary'] {
-                    background: #007ea7 !important;
+                    background-color: #007ea7 !important;
                     color: white !important;
                     border: none !important;
                     padding: 0.5rem 1.5rem !important;
@@ -83,7 +83,7 @@ def style_base_layout():
                     transition: transform 0.2s ease-in-out !important;
                     }
                 button[kind='tertiary'] {
-                    background: #7251b5 !important;
+                    background-color: #03a9f4 !important;
                     color: white !important;
                     border: none !important;
                     padding: 0.5rem 1.5rem !important;

@@ -1,15 +1,25 @@
 import streamlit as st
 from src.components.footer import footer_dashboard
 from src.ui.base_layout import style_background_dashboard, style_base_layout
-
+from src.pipelines.face_pipeline import predict_attendance, get_face_embedding, train_classifier
+from src.pipelines.voice_pipeline import get_voice_embedding
 from src.components.header import header_dashboard
+from src.database.db import get_all_students, create_student
+
 from PIL import Image
 import numpy as np
+
+def student_dashboard():
+    st.header("Welcome to the Student Dashboard!")
 
 def student_screen():
 
     style_background_dashboard()
     style_base_layout()
+
+    if "student_data" in st.session_state:
+        student_dashboard()
+        return
 
     c1, c2 = st.columns(2,vertical_alignment='center', gap='xxlarge')
     with c1:
@@ -21,9 +31,78 @@ def student_screen():
 
     st.header("Login")
     st.space()
+    
+    show_registration = False
     photo_source = st.camera_input("Position your face in the center of the frame and take a picture to log in.")
     
     if photo_source:
-        np.array(Image.open(photo_source))
-    
+        img = np.array(Image.open(photo_source))
+        with st.spinner("Processing your photo..."):
+            detected, all_ids, num_faces = predict_attendance(img)
+
+            if num_faces == 0:
+                st.error("No faces detected. Please try again.")
+            elif num_faces > 1:
+                st.warning("Multiple faces detected. Please ensure only your face is visible and try again.")
+            else:
+                if detected:
+                    student_id = list(detected.keys())[0]
+                    all_students = get_all_students()
+                    student = next((s for s in all_students if s['student_id'] == student_id), None)
+                    if student:
+                        st.session_state.user_role = 'student'
+                        st.session_state.student_data = student
+                        st.session_state.is_logged_in = True
+                        st.toast(f"Welcome, {student['name']}!")
+                        import time
+                        time.sleep(1)
+                        st.rerun()
+                
+                else:
+                    st.info("Face not recognized. Please ensure you are registered and try again.")
+                    show_registration = True
+    if show_registration:
+        with st.container(border=True):
+            st.header('Register new Profile')
+            new_name = st.text_input("Enter your name")
+
+            st.subheader('Voice Enrollment')
+            st.info("Please record a short audio clip of yourself saying 'Hello, this is [Your Name]' for voice recognition enrollment.")
+
+            audio_data = None
+            try:
+                audio_data = st.audio_input("Record your voice here")
+            except Exception:
+                st.error("Failed to access audio input.")
+            
+            if st.button('Create Profile', type = 'primary'):
+                if new_name:
+                    with st.spinner("Creating your profile..."):
+                        img = np.array(Image.open(photo_source))
+                        encodings = get_face_embedding(img)
+                        if encodings:
+                            face_emb = encodings[0].tolist()
+
+                            voice_embedding = None
+                            if audio_data:
+                                voice_emb = get_voice_embedding(audio_data.read())
+
+                            response_data = create_student(new_name, face_embedding=face_emb, voice_embedding = voice_emb)
+
+                            if response_data:
+                                train_classifier()
+                                st.session_state.user_role = 'student'
+                                st.session_state.student_data = response_data[0]
+                                st.session_state.is_logged_in = True
+                                st.toast(f"Profile created successfully! Hi {new_name}!")
+                                import time
+                                time.sleep(1)
+                                st.rerun()
+                        else:
+                            st.error("Failed to extract face embedding. Please ensure your face is clearly visible and try again.")
+                else:
+                    st.warning("Please enter your name to create a profile.")
+
+
+
     footer_dashboard()
