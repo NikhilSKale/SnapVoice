@@ -6,6 +6,10 @@ from src.screens.home_screen import home_screen
 from src.components.dialog_auto_enroll import auto_enroll_dialog
 
 def main():
+    st.set_page_config(
+        page_title='SnapVoice - Smart Attendance Management System',
+        page_icon="https://img.magnific.com/premium-vector/magnifying-glass-logo-people-finder-infinity-searching-vector_718429-1342.jpg?semt=ais_hybrid&w=740&q=80"
+    )
     if 'login_type' not in st.session_state:
         st.session_state['login_type'] = None
     
